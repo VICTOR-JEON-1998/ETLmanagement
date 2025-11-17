@@ -1,0 +1,61 @@
+datastage:
+  # 로컬 DataStage 클라이언트를 통한 ETL 서버 접근
+  server_host: "10.100.20.70"  # IP 주소로 변경
+  server_port: 9446
+  username: "dsadm"
+  password: "Fila2023!"  # 비밀번호 설정 (보안을 위해 .env 파일 사용 권장)
+  # REST API 엔드포인트 (DataStage 11.7+ 지원)
+  api_base_url: "https://10.100.20.70:9446/ibm/iis/api"  # IP 주소로 변경
+  
+  # 기본 프로젝트 (이미지에서 확인)
+  default_project: "BIDW_ADM"
+  
+  # 로컬 Export 파일 경로 (DSX 파일이 있는 디렉토리)
+  # 로컬 Export 파일에서 Job 목록을 불러올 때 사용
+  local_export_path: "C:\\Users\\D001_2240052\\Desktop\\DBA-DE\\ETL job files"
+  
+  # SSH 접근 정보 (REST API 실패 시 사용)
+  ssh:
+    host: "10.100.20.70"
+    port: 22
+    username: "etl_admin"
+    password: "etletl"
+  
+  # 로컬 DataStage Designer 클라이언트 경로
+  designer_client:
+    enabled: true
+    classic_path: "C:\\IBM\\InformationServer\\Clients\\Classic"
+    # dsjob.exe, dsexport.exe 등을 사용하여 서버에 직접 접근
+  
+  # 로컬 DataStage 클라이언트 Java SDK 경로
+  # 일반적인 경로:
+  # - C:\IBM\InformationServer\ASBNode\lib\java (최신 버전)
+  # - C:\IBM\InformationServer\Clients\Classic\lib (구버전)
+  java_sdk:
+    enabled: false  # Segmentation fault 문제로 비활성화 (다른 방법 사용)
+    client_path: "C:\\IBM\\InformationServer\\ASBNode\\lib\\java"  # DataStage JAR 파일 경로
+    # JAR 파일 경로 (자동 검색 실패 시 수동 설정)
+    jar_paths: []
+    # Java 경로 (비어있으면 시스템 기본 Java 사용)
+    # DataStage와 함께 설치된 JDK 사용 권장
+    java_home: "C:\\IBM\\InformationServer\\jdk"  # 또는 jdk32 (32비트)
+  
+databases:
+  mssql:
+    server: "10.100.20.50"
+    port: 11433
+    database: "ERP"
+    username: "userdba"
+    password: "${MSSQL_PASSWORD}"  # .env에서 관리
+  vertica:
+    host: "10.100.20.81"
+    port: 5433
+    database: "BIDW"  # 이미지에서 확인된 데이터베이스 이름
+    username: "vertica"  # 이미지에서 확인된 사용자명
+    password: "${VERTICA_PASSWORD}"  # .env에서 관리
+
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  file: "logs/etlmanagement.log"
+
