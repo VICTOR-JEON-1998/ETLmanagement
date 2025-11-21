@@ -278,13 +278,79 @@ class DSXParser:
                 table_name = None
                 schema = None
                 
+                # 방법 0: TableDef에서 ERP 테이블 먼저 찾기 (가장 우선, XMLProperties 전)
+                if table_type == "source":
+                    tabledef_match = re.search(r'TableDef\s+"([^"]+)"', record_content)
+                    if tabledef_match:
+                        tabledef_value = tabledef_match.group(1)
+                        is_erp_in_tabledef = "FILA_ERP" in tabledef_value or ("ERP" in tabledef_value.upper() and "FILA" in tabledef_value)
+                        
+                        if is_erp_in_tabledef:
+                            # 경로에서 마지막 부분 추출
+                            parts = tabledef_value.split("\\")
+                            if len(parts) >= 2:
+                                last_part = parts[-1]
+                                if "." in last_part:
+                                    schema_table = last_part.split(".", 1)
+                                    if len(schema_table) == 2:
+                                        temp_schema = schema_table[0]
+                                        temp_table = schema_table[1]
+                                        
+                                        # dbo는 스키마가 아니므로 제거
+                                        if temp_schema.lower() == "dbo":
+                                            # FILA_ERP.dbo.DW_ETL_L -> FILA_ERP.DW_ETL_L
+                                            for p in parts:
+                                                if "FILA_ERP" in p:
+                                                    if "FILA_ERP_DW" in p:
+                                                        temp_schema = "FILA_ERP_DW"
+                                                    else:
+                                                        temp_schema = "FILA_ERP"
+                                                    break
+                                        
+                                        if temp_schema and temp_table:
+                                            # 파라미터 형식으로 변환하여 저장
+                                            table_name_param = f"#P_ERP_MS.$P_ERP_MS_OWN_{temp_schema}#.{temp_table}"
+                                            # 바로 추가하고 다음 레코드로
+                                            tables.append({
+                                                "table_name": table_name_param,
+                                                "schema": "",
+                                                "stage_name": stage_name,
+                                                "stage_type": olet_type or stage_type or "Unknown",
+                                                "table_type": table_type
+                                            })
+                                            # 다음 레코드로 이동
+                                            continue
+                
+                # Context 변수 초기화 (먼저 XMLProperties에서 Context 확인)
+                context_value = None
+                xml_properties = self._extract_value(record_content, "XMLProperties")
+                
+                # 먼저 XMLProperties에서 Context 확인 (방법 1에서 찾은 테이블도 필터링하기 위해)
+                if xml_properties:
+                    # =+=+=+= 로 감싸진 경우 처리
+                    xml_props_for_context = xml_properties
+                    if xml_props_for_context.startswith("=+=+=+="):
+                        xml_props_for_context = xml_props_for_context[7:].strip()
+                    if xml_props_for_context.endswith("=+=+=+="):
+                        xml_props_for_context = xml_props_for_context[:-7].strip()
+                    
+                    try:
+                        root_context = ET.fromstring(xml_props_for_context)
+                        context_elem = root_context.find(".//Context")
+                        if context_elem is not None and context_elem.text:
+                            context_value = context_elem.text.strip()
+                    except:
+                        pass
+                
                 # 방법 1: 직접 TableName 필드 찾기 (기존 방식)
                 table_name = self._extract_value(record_content, "TableName")
                 schema = self._extract_value(record_content, "SchemaName")
                 
+                # 방법 1에서 테이블을 찾은 경우, 방법 2는 건너뛰기 (중복 방지)
+                method1_table_found = table_name is not None
+                
                 # 방법 2: XMLProperties에서 TableName 추출 및 Context 확인
-                xml_properties = self._extract_value(record_content, "XMLProperties")
-                if xml_properties:
+                if xml_properties and not method1_table_found:
                     # =+=+=+= 로 감싸진 경우 처리
                     if xml_properties.startswith("=+=+=+="):
                         xml_properties = xml_properties[7:].strip()
@@ -298,31 +364,114 @@ class DSXParser:
                         
                         # Context 확인 (source/target 구분)
                         # Context는 XMLProperties 안에 숫자로 저장됨: 1 = source, 2 = target
-                        context_value = None
-                        context_elem = root.find(".//Context")
-                        if context_elem is not None and context_elem.text:
-                            context_value = context_elem.text.strip()
+                        # 이미 위에서 확인했지만, 다시 확인 (혹시 모를 경우를 위해)
+                        if not context_value:
+                            context_elem = root.find(".//Context")
+                            if context_elem is not None and context_elem.text:
+                                context_value = context_elem.text.strip()
                         
-                        # Context 값에 따라 필터링: 1 = source, 2 = target
-                        if context_value:
-                            if table_type == "source" and context_value != "1":
-                                continue
-                            if table_type == "target" and context_value != "2":
-                                continue
+                        # 먼저 TableDef에서 ERP 테이블 찾기 (Context 필터링 전, 가장 우선)
+                        # TableDef는 DSRECORD 레벨에 있으므로 record_content에서 찾기
+                        tabledef_match = re.search(r'TableDef\s+"([^"]+)"', record_content)
+                        if tabledef_match and table_type == "source":
+                            tabledef_value = tabledef_match.group(1)
+                            is_erp_in_tabledef = "FILA_ERP" in tabledef_value or ("ERP" in tabledef_value.upper() and "FILA" in tabledef_value)
+                            
+                            if is_erp_in_tabledef:
+                                # 경로에서 마지막 부분 추출
+                                parts = tabledef_value.split("\\")
+                                if len(parts) >= 2:
+                                    last_part = parts[-1]
+                                    if "." in last_part:
+                                        schema_table = last_part.split(".", 1)
+                                        if len(schema_table) == 2:
+                                            temp_schema = schema_table[0]
+                                            temp_table = schema_table[1]
+                                            
+                                            # dbo는 스키마가 아니므로 제거
+                                            if temp_schema.lower() == "dbo":
+                                                # FILA_ERP.dbo.DW_ETL_L -> FILA_ERP.DW_ETL_L
+                                                for p in parts:
+                                                    if "FILA_ERP" in p:
+                                                        # FILA_ERP 또는 FILA_ERP_DW 추출
+                                                        if "FILA_ERP_DW" in p:
+                                                            temp_schema = "FILA_ERP_DW"
+                                                        else:
+                                                            temp_schema = "FILA_ERP"
+                                                        break
+                                            
+                                            if temp_schema and temp_table:
+                                                # 파라미터 형식으로 변환하여 저장
+                                                # FILA_ERP.DW_ETL_L -> #P_ERP_MS.$P_ERP_MS_OWN_FILA_ERP#.DW_ETL_L
+                                                table_name = f"#P_ERP_MS.$P_ERP_MS_OWN_{temp_schema}#.{temp_table}"
+                                                schema = ""
+                                                # ERP 테이블은 보통 소스이므로 Context 필터링 없이 바로 추가하지 않고
+                                                # table_name을 설정하고 나중에 Context 필터링을 거치도록 함
+                                                # (다음 레코드로 이동하지 않고 계속 진행하여 Context 필터링을 거침)
+                                                break
                         
-                        # TableName 찾기 (Context 확인 후에도 계속 진행)
+                        # 먼저 SelectStatement에서 ERP 테이블 찾기 (Context 필터링 전)
+                        # ERP 테이블은 보통 소스이므로 소스 타입일 때만 찾기
+                        if table_type == "source" and not table_name:
+                            for sql_elem in root.findall(".//SelectStatement"):
+                                if sql_elem.text:
+                                    sql_text = sql_elem.text.strip()
+                                    # FROM 절에서 ERP 테이블 추출
+                                    from_matches = re.findall(r'FROM\s+([^\s,;]+(?:\.[^\s,;]+)*)', sql_text, re.IGNORECASE | re.DOTALL)
+                                    for from_match in from_matches:
+                                        table_ref = from_match.strip()
+                                        table_ref = re.sub(r'\s+', '', table_ref)
+                                        
+                                        # ERP 테이블인지 확인
+                                        if "#P_ERP" in table_ref or ("ERP" in table_ref.upper() and "." in table_ref):
+                                            # ERP 테이블 발견 - 파라미터 형식 처리
+                                            if "." in table_ref:
+                                                parts = table_ref.rsplit(".", 1)
+                                                if len(parts) == 2:
+                                                    if parts[0].startswith("#"):
+                                                        table_name = table_ref
+                                                    else:
+                                                        table_name = parts[1]
+                                                        schema = parts[0]
+                                                else:
+                                                    table_name = table_ref
+                                            else:
+                                                table_name = table_ref
+                                            
+                                            # ERP 테이블을 찾았으면 table_name을 설정하고 계속 진행
+                                            # (Context 필터링을 거치도록 함)
+                                            if table_name and table_name.strip() and not table_name.endswith("#."):
+                                                break
+                                    if table_name:  # ERP 테이블을 찾은 경우
+                                        break
+                        
+                        # ERP 테이블인지 확인 (TableName 기준)
+                        is_erp_table = False
+                        temp_table_name = None
                         for table_elem in root.findall(".//TableName"):
                             if table_elem.text:
-                                table_name = table_elem.text.strip()
+                                temp_table_name = table_elem.text.strip()
+                                if "#P_ERP" in temp_table_name or "ERP" in temp_table_name.upper():
+                                    is_erp_table = True
                                 break
+                        
+                        # TableName 찾기 (Context 확인 전에 먼저 찾기)
+                        if not table_name:  # SelectStatement에서 찾지 못한 경우만
+                            for table_elem in root.findall(".//TableName"):
+                                if table_elem.text:
+                                    table_name = table_elem.text.strip()
+                                    break
+                        
+                        # 방법 2에서는 테이블만 찾고, Context 필터링은 마지막에 한 번만 적용
                         
                         # SchemaName 찾기 (있는 경우)
-                        for schema_elem in root.findall(".//SchemaName"):
-                            if schema_elem.text:
-                                schema = schema_elem.text.strip()
-                                break
+                        if not schema:
+                            for schema_elem in root.findall(".//SchemaName"):
+                                if schema_elem.text:
+                                    schema = schema_elem.text.strip()
+                                    break
                         
-                        # SQL 문에서 테이블 추출 (TableName이 없는 경우)
+                        # SQL 문에서 테이블 추출 (TableName이 없는 경우, ERP가 아닌 경우)
                         if not table_name:
                             # SelectStatement 찾기
                             for sql_elem in root.findall(".//SelectStatement"):
@@ -331,26 +480,48 @@ class DSXParser:
                                     # FROM 절에서 테이블 추출
                                     # FROM #P_ERP_MS.$P_ERP_MS_OWN_FILA_ERP#.WM_WRHS_M 같은 패턴
                                     # 여러 줄에 걸쳐 있을 수 있으므로 DOTALL 사용
-                                    from_match = re.search(r'FROM\s+([^\s,;]+(?:\.[^\s,;]+)*)', sql_text, re.IGNORECASE | re.DOTALL)
-                                    if from_match:
-                                        table_ref = from_match.group(1).strip()
+                                    # 여러 테이블이 있을 수 있으므로 모두 찾기
+                                    from_matches = re.findall(r'FROM\s+([^\s,;]+(?:\.[^\s,;]+)*)', sql_text, re.IGNORECASE | re.DOTALL)
+                                    for from_match in from_matches:
+                                        table_ref = from_match.strip()
                                         # 개행 문자 제거
                                         table_ref = re.sub(r'\s+', '', table_ref)
-                                        # 파라미터 형식: #P_ERP_MS.$P_ERP_MS_OWN_FILA_ERP#.WM_WRHS_M
-                                        # 또는 일반 형식: SCHEMA.TABLE
-                                        if "." in table_ref:
-                                            parts = table_ref.rsplit(".", 1)
-                                            if len(parts) == 2:
-                                                # 스키마 부분이 파라미터인 경우 전체를 table_name으로 저장
-                                                if parts[0].startswith("#"):
-                                                    # 파라미터 전체를 table_name으로 저장 (나중에 파라미터 매퍼가 해석)
-                                                    table_name = table_ref
-                                                else:
-                                                    # 일반 스키마.테이블 형식
-                                                    table_name = parts[1]
-                                                    schema = parts[0]
-                                        else:
-                                            table_name = table_ref
+                                        
+                                        # ERP 테이블인지 확인
+                                        is_erp_in_sql = "#P_ERP" in table_ref or "ERP" in table_ref.upper()
+                                        
+                                        # ERP 테이블이고 소스 타입인 경우만 처리
+                                        if is_erp_in_sql and table_type == "source":
+                                            # 파라미터 형식: #P_ERP_MS.$P_ERP_MS_OWN_FILA_ERP#.WM_WRHS_M
+                                            # 또는 일반 스키마.테이블 형식
+                                            if "." in table_ref:
+                                                parts = table_ref.rsplit(".", 1)
+                                                if len(parts) == 2:
+                                                    # 스키마 부분이 파라미터인 경우 전체를 table_name으로 저장
+                                                    if parts[0].startswith("#"):
+                                                        # 파라미터 전체를 table_name으로 저장 (나중에 파라미터 매퍼가 해석)
+                                                        table_name = table_ref
+                                                    else:
+                                                        # 일반 스키마.테이블 형식
+                                                        table_name = parts[1]
+                                                        schema = parts[0]
+                                            else:
+                                                table_name = table_ref
+                                            break
+                                        elif not is_erp_in_sql:
+                                            # ERP가 아닌 경우 기존 로직 사용
+                                            if "." in table_ref:
+                                                parts = table_ref.rsplit(".", 1)
+                                                if len(parts) == 2:
+                                                    if parts[0].startswith("#"):
+                                                        table_name = table_ref
+                                                    else:
+                                                        table_name = parts[1]
+                                                        schema = parts[0]
+                                            else:
+                                                table_name = table_ref
+                                            break
+                                    if table_name:
                                         break
                             
                             # SQL 필드도 확인
@@ -432,7 +603,68 @@ class DSXParser:
                                             else:
                                                 table_name = table_ref
                 
-                # 방법 3: 정규식으로 직접 찾기 (XML 파싱 실패 시)
+                # 방법 3: TableDef 필드에서 테이블 추출 (ERP 테이블 등)
+                if not table_name:
+                    # TableDef "ODBC\\SQLServer_dev_FILA_ERP\\FILA_ERP.dbo.DW_ETL_L"
+                    # TableDef "Database\\ERPDEV2\\BIDWADM.CD_DAY_NM"
+                    tabledef_match = re.search(r'TableDef\s+"([^"]+)"', record_content)
+                    if tabledef_match:
+                        tabledef_value = tabledef_match.group(1)
+                        
+                        # ERP 관련 확인
+                        is_erp_in_tabledef = "FILA_ERP" in tabledef_value or ("ERP" in tabledef_value.upper() and "FILA" in tabledef_value)
+                        
+                        # ERP 테이블이고 소스 타입인 경우만 처리
+                        if is_erp_in_tabledef and table_type == "source":
+                            # 경로에서 마지막 부분 추출
+                            # ODBC\\SQLServer_dev_FILA_ERP\\FILA_ERP.dbo.DW_ETL_L
+                            # Database\\ERPDEV2\\BIDWADM.CD_DAY_NM
+                            parts = tabledef_value.split("\\")
+                            if len(parts) >= 2:
+                                last_part = parts[-1]
+                                if "." in last_part:
+                                    schema_table = last_part.split(".", 1)
+                                    if len(schema_table) == 2:
+                                        schema = schema_table[0]
+                                        table = schema_table[1]
+                                        
+                                        # dbo는 스키마가 아니므로 제거
+                                        if schema.lower() == "dbo":
+                                            # FILA_ERP.dbo.DW_ETL_L -> FILA_ERP.DW_ETL_L
+                                            # 이전 부분에서 스키마 찾기
+                                            if len(parts) >= 2:
+                                                prev_part = parts[-2]
+                                                if "FILA_ERP" in prev_part:
+                                                    # FILA_ERP 관련 부분 찾기
+                                                    for p in parts:
+                                                        if "FILA_ERP" in p:
+                                                            schema = "FILA_ERP"
+                                                            break
+                                            else:
+                                                schema = ""
+                                        
+                                        # 파라미터 형식으로 변환 (나중에 정규화를 위해)
+                                        if schema and table:
+                                            # FILA_ERP.DW_ETL_L -> #P_ERP_MS.$P_ERP_MS_OWN_FILA_ERP#.DW_ETL_L 형식으로 변환
+                                            # 또는 그대로 사용
+                                            table_name = f"{schema}.{table}" if schema else table
+                                            # schema는 이미 설정됨
+                        
+                        # Vertica 테이블도 처리 (BIDW 관련)
+                        elif "BIDW" in tabledef_value.upper() and not is_erp_in_tabledef:
+                            parts = tabledef_value.split("\\")
+                            if len(parts) >= 2:
+                                last_part = parts[-1]
+                                if "." in last_part:
+                                    schema_table = last_part.split(".", 1)
+                                    if len(schema_table) == 2:
+                                        schema = schema_table[0]
+                                        table = schema_table[1]
+                                        table_name = table
+                        
+                        # 방법 3에서는 테이블만 찾고, Context 필터링은 마지막에 한 번만 적용
+                
+                # 방법 4: 정규식으로 직접 찾기 (XML 파싱 실패 시)
                 if not table_name:
                     # XMLProperties 전체에서 TableName CDATA 찾기
                     xml_properties_match = re.search(r'XMLProperties.*?Value\s+(?:=+=+=+=)?(.*?)(?:=+=+=+=)?\s+END DSSUBRECORD', record_content, re.DOTALL)
@@ -443,8 +675,92 @@ class DSXParser:
                         if table_match:
                             table_name = table_match.group(1).strip()
                 
-                # 테이블명에서 스키마와 테이블명 분리
+                        # 방법 4에서는 테이블만 찾고, Context 필터링은 마지막에 한 번만 적용
+                        # Context가 없었던 경우 다시 확인
+                        if table_name and not context_value:
+                            context_match = re.search(r'<Context[^>]*>(\d+)</Context>', xml_content)
+                            if context_match:
+                                context_value = context_match.group(1).strip()
+                
+                # 방법 5: ODBCConnectorPX 타입의 Stage에서 Stage 이름으로 테이블 추론
+                # Stage 이름이 S..., L_S..., T... 형식이면 뒤의 식별자가 실제 테이블명일 가능성이 높음
+                if not table_name and is_connector and stage_name:
+                    # Stage 이름 예시:
+                    #   S_CM_USER_M, S2_OD_WM_INVN_MNTH, L_S4_FT_DD_SIZE_IN_RTN, T_FT_MM_SIZE_INVN
+                    stage_name_upper = stage_name.upper()
+                    
+                    def _infer_from_stage(prefixes):
+                        upper = stage_name_upper
+                        for prefix in prefixes:
+                            if upper.startswith(prefix) and len(stage_name) > len(prefix):
+                                return stage_name[len(prefix):]
+                        # S2_, S10_ 등 숫자 포함 패턴
+                        match = re.match(r'(S\d+_)', upper)
+                        if match and len(stage_name) > len(match.group(1)):
+                            return stage_name[len(match.group(1)):]
+                        match_l = re.match(r'(L_S\d+_)', upper)
+                        if match_l and len(stage_name) > len(match_l.group(1)):
+                            return stage_name[len(match_l.group(1)):]
+                        match_t = re.match(r'(T\d+_)', upper)
+                        if match_t and len(stage_name) > len(match_t.group(1)):
+                            return stage_name[len(match_t.group(1)):]
+                        return None
+                    
+                    inferred_table = None
+                    if table_type == "source":
+                        inferred_table = _infer_from_stage(["S_", "L_S_"])
+                    elif table_type == "target":
+                        inferred_table = _infer_from_stage(["T_", "L_T_"])
+                    
+                    if inferred_table:
+                        # ERP 테이블일 가능성이 높으므로 스키마는 나중에 정규화 과정에서 보정
+                        table_name = inferred_table
+                        schema = ""
+                
+                # 테이블명에서 스키마와 테이블명 분리 및 Context 필터링 (단순화된 버전)
                 if table_name:
+                    # Context 필터링: 모든 방법에서 찾은 테이블에 대해 마지막에 한 번만 적용
+                    if context_value:
+                        # ERP 테이블인지 확인
+                        is_erp_table = "#P_ERP" in table_name or "ERP" in table_name.upper()
+                        
+                        # Context 필터링: 1 = source, 2 = target
+                        if table_type == "source" and context_value != "1":
+                            # ERP 테이블인 경우 예외: Context가 2여도 소스로 간주
+                            if not is_erp_table:
+                                continue  # 필터링: 소스가 아닌 경우 제외
+                        elif table_type == "target" and context_value != "2":
+                            continue  # 필터링: 타겟이 아닌 경우 제외
+                    else:
+                        # Context가 없는 경우: Stage 이름으로 판단
+                        stage_name_lower = (stage_name or "").lower()
+                        
+                        # Stage 이름에 "source", "input", "read", "from", "_s_", "s_" 등이 있으면 소스로 간주
+                        is_source_stage = (
+                            any(keyword in stage_name_lower for keyword in ["source", "input", "read", "from", "_s_", "_src"]) or
+                            stage_name_lower.startswith("s_") or
+                            stage_name_lower.startswith("l_s_") or
+                            re.match(r's\d+_', stage_name_lower) is not None or
+                            re.match(r'l_s\d+_', stage_name_lower) is not None
+                        )
+                        # Stage 이름에 "target", "output", "write", "to", "_t_", "_tgt" 등이 있으면 타겟으로 간주
+                        is_target_stage = (
+                            any(keyword in stage_name_lower for keyword in ["target", "output", "write", "to", "_t_", "_tgt"]) or
+                            stage_name_lower.startswith("t_") or
+                            stage_name_lower.startswith("l_t_") or
+                            re.match(r't\d+_', stage_name_lower) is not None or
+                            re.match(r'l_t\d+_', stage_name_lower) is not None
+                        )
+                        
+                        # Stage 이름으로 판단 가능한 경우만 필터링
+                        if is_source_stage and table_type != "source":
+                            continue  # 필터링: 소스 Stage인데 타겟으로 요청한 경우 제외
+                        elif is_target_stage and table_type != "target":
+                            continue  # 필터링: 타겟 Stage인데 소스로 요청한 경우 제외
+                        # Stage 이름으로도 판단 불가능한 경우는 추가하지 않음 (중복 방지)
+                        elif not is_source_stage and not is_target_stage:
+                            continue  # 필터링: 판단 불가능한 경우 제외
+                    
                     # 파라미터 형식 처리: #P_DW_VER.$P_DW_VER_OWN_BIDWADM#.FT_AS_ACCP_RSLT
                     # 또는 일반 형식: SCHEMA.TABLE
                     original_table_name = table_name
@@ -513,6 +829,48 @@ class DSXParser:
                 table_name = None
                 schema = None
                 table_type_determined = None  # "source" 또는 "target" 또는 None
+                
+                # 방법 0: TableDef에서 ERP 테이블 먼저 찾기 (가장 우선, XMLProperties 전)
+                tabledef_match = re.search(r'TableDef\s+"([^"]+)"', record_content)
+                if tabledef_match:
+                    tabledef_value = tabledef_match.group(1)
+                    is_erp_in_tabledef = "FILA_ERP" in tabledef_value or ("ERP" in tabledef_value.upper() and "FILA" in tabledef_value)
+                    
+                    if is_erp_in_tabledef:
+                        # 경로에서 마지막 부분 추출
+                        parts = tabledef_value.split("\\")
+                        if len(parts) >= 2:
+                            last_part = parts[-1]
+                            if "." in last_part:
+                                schema_table = last_part.split(".", 1)
+                                if len(schema_table) == 2:
+                                    temp_schema = schema_table[0]
+                                    temp_table = schema_table[1]
+                                    
+                                    # dbo는 스키마가 아니므로 제거
+                                    if temp_schema.lower() == "dbo":
+                                        # FILA_ERP.dbo.DW_ETL_L -> FILA_ERP.DW_ETL_L
+                                        for p in parts:
+                                            if "FILA_ERP" in p:
+                                                if "FILA_ERP_DW" in p:
+                                                    temp_schema = "FILA_ERP_DW"
+                                                else:
+                                                    temp_schema = "FILA_ERP"
+                                                break
+                                    
+                                    if temp_schema and temp_table:
+                                        # 파라미터 형식으로 변환하여 저장
+                                        table_name_param = f"#P_ERP_MS.$P_ERP_MS_OWN_{temp_schema}#.{temp_table}"
+                                        # ERP 테이블은 보통 소스이므로 소스로 추가
+                                        source_tables.append({
+                                            "table_name": table_name_param,
+                                            "schema": "",
+                                            "stage_name": stage_name,
+                                            "stage_type": olet_type or stage_type or "Unknown",
+                                            "table_type": "source"
+                                        })
+                                        # 다음 레코드로 이동
+                                        continue
                 
                 # 방법 1: 직접 TableName 필드 찾기
                 table_name = self._extract_value(record_content, "TableName")
@@ -714,7 +1072,7 @@ class DSXParser:
                                   f"stage_name={stage_name}, context={table_type_determined}")
                         
                         # Context 값에 따라 source/target 분류
-                        # Context가 없거나 알 수 없으면 둘 다에 추가 (안전하게)
+                        # Context가 명확하지 않으면 Stage 타입으로 판단 시도
                         if table_type_determined == "source":
                             source_tables.append(table_info)
                             logger.debug(f"  → source_tables에 추가")
@@ -722,11 +1080,25 @@ class DSXParser:
                             target_tables.append(table_info)
                             logger.debug(f"  → target_tables에 추가")
                         else:
-                            # Context가 없거나 알 수 없으면 둘 다에 추가
-                            # (실제로는 source일 수도 있고 target일 수도 있음)
-                            source_tables.append(table_info)
-                            target_tables.append(table_info)
-                            logger.debug(f"  → source_tables와 target_tables 둘 다에 추가 (Context 없음)")
+                            # Context가 없을 때는 Stage 타입으로 판단
+                            # 일반적으로 Database/ODBC Stage는 Context가 있어야 하지만,
+                            # 없는 경우 Stage 이름이나 타입으로 추정
+                            # 중복 방지를 위해 한쪽에만 추가 (일단 타겟으로 간주)
+                            # (실제로는 Context가 있는 경우가 대부분이므로 이 경우는 드뭄)
+                            stage_type_lower = (olet_type or stage_type or "").lower()
+                            stage_name_lower = (stage_name or "").lower()
+                            
+                            # Stage 이름에 "source", "input", "read" 등이 있으면 소스로 간주
+                            if any(keyword in stage_name_lower for keyword in ["source", "input", "read", "from"]):
+                                source_tables.append(table_info)
+                                logger.debug(f"  → source_tables에 추가 (Stage 이름으로 판단)")
+                            # Stage 이름에 "target", "output", "write", "to" 등이 있으면 타겟으로 간주
+                            elif any(keyword in stage_name_lower for keyword in ["target", "output", "write", "to", "_t_", "_tgt"]):
+                                target_tables.append(table_info)
+                                logger.debug(f"  → target_tables에 추가 (Stage 이름으로 판단)")
+                            else:
+                                # 판단 불가능한 경우는 추가하지 않음 (중복 방지)
+                                logger.debug(f"  → Context 없음, Stage 이름으로도 판단 불가, 추가하지 않음")
                 
         except Exception as e:
             logger.error(f"테이블 추출 중 오류: {e}")

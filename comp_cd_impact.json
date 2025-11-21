@@ -1,0 +1,1263 @@
+{
+  "column": "COMP_CD",
+  "erp_tables": [
+    "CM_AUTH_USER_COMP_D",
+    "CM_CD_INTG_D",
+    "CM_CD_INTG_M",
+    "CM_DEPT_M",
+    "CM_FILE_M",
+    "CM_GDS_IMG_M",
+    "CM_USER_M",
+    "CM_USER_SHOP_VNDR_M",
+    "CO_ACUNIT_M",
+    "CO_CCTR_M",
+    "CO_CLAC_M",
+    "CO_COMP_M",
+    "CO_DSTRSHOP_EXEC_D",
+    "CO_DSTRSHOP_EXEC_M",
+    "CO_PCTR_M",
+    "CO_PLAN_CCTR_D",
+    "CO_PLAN_GDS_D",
+    "CO_PLAN_INVN_D",
+    "CO_PLAN_M",
+    "CO_PLAN_SHOP_D",
+    "CO_PNL_SHOP_S",
+    "CO_PNL_SL_S",
+    "DBO.CM_CD_INTG_D",
+    "DBO.CM_CD_INTG_M",
+    "DBO.CM_FILE_M",
+    "DBO.CM_GDS_IMG_M",
+    "DBO.CM_USER_SHOP_VNDR_M",
+    "DBO.CO_CCTR_M",
+    "DBO.CO_DSTRSHOP_EXEC_D",
+    "DBO.CO_DSTRSHOP_EXEC_M",
+    "DBO.CO_PCTR_M",
+    "DBO.CO_PLAN_CCTR_D",
+    "DBO.CO_PLAN_GDS_D",
+    "DBO.CO_PLAN_INVN_D",
+    "DBO.CO_PLAN_M",
+    "DBO.CO_PLAN_SHOP_D",
+    "DBO.CO_PNL_SL_S",
+    "DBO.DW_ZIPCD_M",
+    "DBO.OZ_DEPT_M",
+    "DBO.PN_BRND_D",
+    "DBO.PN_BRND_M",
+    "DBO.PN_BRND_STYL_CLR_M",
+    "DBO.PN_BRND_STYL_SIZE_M",
+    "DBO.PN_MAIN_STYL_CLR_M",
+    "DBO.PN_SIZE_ZONE_M",
+    "DBO.PO_PRCH_BDGT_CHG_D",
+    "DBO.PO_PRCH_BDGT_CHG_M",
+    "DBO.PO_PRCH_BDGT_FRMN_M",
+    "DBO.PO_PRCH_BDGT_USE_M",
+    "DBO.PP_CLM_M",
+    "DBO.PP_DUDT_CLM_M",
+    "DBO.PP_STYL_IN_SCH_M",
+    "DBO.PP_STYL_PRCOST_D",
+    "DBO.PP_STYL_PTCOST_D",
+    "DBO.PP_STYL_PTCOST_M",
+    "DBO.SA_BRND_TRSF_M",
+    "DBO.SA_BRND_TRSF_STYL_D",
+    "DBO.SA_CLPY_AVG_CPRC_M",
+    "DBO.SA_DC_EVNT_M",
+    "DBO.SA_MLY_EXPT_GOAL_M",
+    "DBO.SA_MLY_GOAL_TCNT_M",
+    "DBO.SA_SA_PIC_M",
+    "DBO.SA_SHOP_MLY_GDS_AGG_S",
+    "DBO.SA_SHOP_MLY_INVN_AGG_S",
+    "DBO.SA_SHOP_OPER_PLAN_M",
+    "DBO.SA_SHOP_SL_BRND_M",
+    "DBO.SA_SHOP_SL_BRND_PIC_M",
+    "DBO.SA_STYL_GRP_CMPS_D",
+    "DBO.SA_STYL_GRP_M",
+    "DBO.SA_WHLS_DLY_SL_S",
+    "DBO.SA_WHLS_ORD_MOVE_D",
+    "DBO.SA_WHLS_ORD_MOVE_M",
+    "DBO.SA_WHLS_ORD_OUT_D",
+    "DBO.SA_WHLS_ORD_OUT_M",
+    "DBO.SA_WHLS_RTNG_D",
+    "DBO.SA_WHLS_RTNG_M",
+    "DBO.SP_SL_CMPG_BNFT_D",
+    "DBO.WM_INVN_MNTH_M",
+    "DBO.WM_MOVE_REQ_D",
+    "DBO.WM_MOVE_REQ_M",
+    "DBO.WM_OUT_D",
+    "DBO.WM_WRHS_M",
+    "DW_ZIPCD_M",
+    "EI_EXPO_BY_VRTL_IN_D",
+    "EI_EXPO_BY_VRTL_IN_M",
+    "EI_IMPO_IN_REQ_D",
+    "EI_IMPO_IN_REQ_M",
+    "EI_IMPO_PO_D",
+    "EI_IMPO_PO_M",
+    "EI_SRM_SHPP_BKNG_M",
+    "EM_EMP_APNT_D",
+    "EM_EMP_INFO_M",
+    "EM_EMP_PINFO_D",
+    "EM_JBGRD_MNG_M",
+    "FI_CUST_M",
+    "FI_EXRT_M",
+    "HR_BU_M",
+    "OZ_DEPT_M",
+    "PN_BRND_D",
+    "PN_BRND_M",
+    "PN_BRND_STYL_CLR_M",
+    "PN_BRND_STYL_SIZE_M",
+    "PN_MAIN_STYL_CLR_M",
+    "PN_MAIN_STYL_M",
+    "PN_MAIN_STYL_SIZE_M",
+    "PN_SIZE_ZONE_M",
+    "PO_PRCH_BDGT_CHG_D",
+    "PO_PRCH_BDGT_CHG_M",
+    "PO_PRCH_BDGT_FRMN_M",
+    "PO_PRCH_BDGT_USE_M",
+    "PO_PRCH_ESTM_M",
+    "PO_STYL_PO_D",
+    "PP_CLM_M",
+    "PP_DUDT_CLM_M",
+    "PP_STYL_IN_SCH_D",
+    "PP_STYL_IN_SCH_M",
+    "PP_STYL_PRCOST_D",
+    "PP_STYL_PRCOST_M",
+    "PP_STYL_PTCOST_D",
+    "PP_STYL_PTCOST_M",
+    "SA_BRND_TRSF_M",
+    "SA_BRND_TRSF_STYL_D",
+    "SA_CLPY_AVG_CPRC_M",
+    "SA_DC_EVNT_M",
+    "SA_DLY_SLS_GOAL_M",
+    "SA_MLY_EXPT_GOAL_M",
+    "SA_MLY_GOAL_TCNT_M",
+    "SA_SA_PIC_M",
+    "SA_SHOP_INFO_M",
+    "SA_SHOP_MLY_CLPY_M",
+    "SA_SHOP_MLY_GDS_AGG_S",
+    "SA_SHOP_MLY_INVN_AGG_S",
+    "SA_SHOP_OPER_PLAN_M",
+    "SA_SHOP_SL_BRND_M",
+    "SA_SHOP_SL_BRND_PIC_M",
+    "SA_STYL_GRP_CMPS_D",
+    "SA_STYL_GRP_M",
+    "SA_WHLS_DLY_SL_S",
+    "SA_WHLS_ORD_D",
+    "SA_WHLS_ORD_M",
+    "SA_WHLS_ORD_MOVE_D",
+    "SA_WHLS_ORD_MOVE_M",
+    "SA_WHLS_ORD_OUT_D",
+    "SA_WHLS_ORD_OUT_M",
+    "SA_WHLS_RTNG_D",
+    "SA_WHLS_RTNG_M",
+    "SA_WRHS_MLY_CLPY_S",
+    "SP_SL_CMPG_BNFT_D",
+    "SP_SL_M",
+    "SP_SL_PAY_D",
+    "SP_SL_PDITEM_D",
+    "WM_INVN_MNTH_M",
+    "WM_IN_D",
+    "WM_MOVE_REQ_D",
+    "WM_MOVE_REQ_M",
+    "WM_OUT_D",
+    "WM_WRHS_M"
+  ],
+  "tier1_jobs": [
+    {
+      "job_name": "m_OD_CM_AUTH_USER_COMP_D_a01",
+      "file_path": "Datastage export jobs\\exportall.dsx",
+      "erp_sources": [
+        "CM_AUTH_USER_COMP_D"
+      ],
+      "od_targets": [
+        "BIDWADM_CO.OD_CM_AUTH_USER_COMP_D"
+      ]
+    },
+    {
+      "job_name": "m_OD_CM_CD_INTG_D_a01",
+      "file_path": "Datastage export jobs\\exportall.dsx",
+      "erp_sources": [
+        "CM_CD_INTG_D",
+        "DBO.CM_CD_INTG_D"
+      ],
+      "od_targets": [
+        "BIDWADM_CO.OD_CM_CD_INTG_D"
+      ]
+    },
+    {
+      "job_name": "m_OD_CM_CD_INTG_D_a01_sample",
+      "file_path": "Datastage export jobs\\exportall.dsx",
+      "erp_sources": [
+        "CM_CD_INTG_D",
+        "DBO.CM_CD_INTG_D"
+      ],
+      "od_targets": [
+        "BIDWADM_CO.OD_CM_CD_INTG_D"
+      ]
+    },
+    {
+      "job_name": "m_OD_CM_CD_INTG_M_a01",
+      "file_path": "Datastage export jobs\\exportall.dsx",
+      "erp_sources": [
+        "CM_CD_INTG_M",
+        "DBO.CM_CD_INTG_M"
+      ],
+      "od_targets": [
+        "BIDWADM_CO.OD_CM_CD_INTG_M"
+      ]
+    },
+    {
+      "job_name": "m_OD_CM_DEPT_M_a01",
+      "file_path": "Datastage export jobs\\exportall.dsx",
+      "erp_sources": [
+        "CM_DEPT_M"
+      ],
+      "od_targets": [
+        "BIDWADM_CO.OD_CM_DEPT_M"
+      ]
+    },
+    {
+      "job_name": "m_OD_CM_FILE_M_a01",
+      "file_path": "Datastage export jobs\\exportall.dsx",
+      "erp_sources": [
+        "CM_FILE_M",
+        "DBO.CM_FILE_M"
+      ],
+      "od_targets": [
+        "BIDWADM_CO.OD_CM_FILE_M"
+      ]
+    },
+    {
+      "job_name": "m_OD_CM_GDS_IMG_M_a01",
+      "file_path": "Datastage export jobs\\exportall.dsx",
+      "erp_sources": [
+        "CM_GDS_IMG_M",
+        "DBO.CM_GDS_IMG_M"
+      ],
+      "od_targets": [
+        "BIDWADM_CO.OD_CM_GDS_IMG_M"
+      ]
+    },
+    {
+      "job_name": "m_OD_CM_USER_M_a01",
+      "file_path": "Datastage export jobs\\exportall.dsx",
+      "erp_sources": [
+        "CM_USER_M"
+      ],
+      "od_targets": [
+        "BIDWADM_CO.OD_CM_USER_M"
+      ]
+    },
+    {
+      "job_name": "m_OD_CM_USER_SHOP_VNDR_M_a01",
+      "file_path": "Datastage export jobs\\exportall.dsx",
+      "erp_sources": [
+        "CM_USER_SHOP_VNDR_M",
+        "DBO.CM_USER_SHOP_VNDR_M"
+      ],
+      "od_targets": [
+        "BIDWADM_CO.OD_CM_USER_SHOP_VNDR_M"
+      ]
+    },
+    {
+      "job_name": "m_OD_CO_ACUNIT_M_a01",
+      "file_path": "Datastage export jobs\\exportall.dsx",
+      "erp_sources": [
+        "CO_ACUNIT_M"
+      ],
+      "od_targets": [
+        "BIDWADM_CO.OD_CO_ACUNIT_M"
+      ]
+    },
+    {
+      "job_name": "m_OD_CO_CCTR_M_a01",
+      "file_path": "Datastage export jobs\\exportall.dsx",
+      "erp_sources": [
+        "CO_CCTR_M",
+        "DBO.CO_CCTR_M"
+      ],
+      "od_targets": [
+        "BIDWADM_CO.OD_CO_CCTR_M"
+      ]
+    },
+    {
+      "job_name": "m_OD_CO_CLAC_M_a01",
+      "file_path": "Datastage export jobs\\exportall.dsx",
+      "erp_sources": [
+        "CO_CLAC_M"
+      ],
+      "od_targets": [
+        "BIDWADM_CO.OD_CO_CLAC_M"
+      ]
+    },
+    {
+      "job_name": "m_OD_CO_COMP_M_a01",
+      "file_path": "Datastage export jobs\\exportall.dsx",
+      "erp_sources": [
+        "CO_COMP_M"
+      ],
+      "od_targets": [
+        "BIDWADM_CO.OD_CO_COMP_M"
+      ]
+    },
+    {
+      "job_name": "m_OD_CO_DSTRSHOP_EXEC_D_a01",
+      "file_path": "Datastage export jobs\\exportall.dsx",
+      "erp_sources": [
+        "CO_DSTRSHOP_EXEC_D",
+        "DBO.CO_DSTRSHOP_EXEC_D"
+      ],
+      "od_targets": [
+        "BIDWADM_CO.OD_CO_DSTRSHOP_EXEC_D"
+      ]
+    },
+    {
+      "job_name": "m_OD_CO_DSTRSHOP_EXEC_M_a01",
+      "file_path": "Datastage export jobs\\exportall.dsx",
+      "erp_sources": [
+        "CO_DSTRSHOP_EXEC_M",
+        "DBO.CO_DSTRSHOP_EXEC_M"
+      ],
+      "od_targets": [
+        "BIDWADM_CO.OD_CO_DSTRSHOP_EXEC_M"
+      ]
+    },
+    {
+      "job_name": "m_OD_CO_PCTR_M_a01",
+      "file_path": "Datastage export jobs\\exportall.dsx",
+      "erp_sources": [
+        "CO_PCTR_M",
+        "DBO.CO_PCTR_M"
+      ],
+      "od_targets": [
+        "BIDWADM_CO.OD_CO_PCTR_M"
+      ]
+    },
+    {
+      "job_name": "m_OD_CO_PLAN_CCTR_D_a01",
+      "file_path": "Datastage export jobs\\exportall.dsx",
+      "erp_sources": [
+        "CO_PLAN_CCTR_D",
+        "DBO.CO_PLAN_CCTR_D"
+      ],
+      "od_targets": [
+        "BIDWADM_CO.OD_CO_PLAN_CCTR_D"
+      ]
+    },
+    {
+      "job_name": "m_OD_CO_PLAN_GDS_D_a01",
+      "file_path": "Datastage export jobs\\exportall.dsx",
+      "erp_sources": [
+        "CO_PLAN_GDS_D",
+        "DBO.CO_PLAN_GDS_D"
+      ],
+      "od_targets": [
+        "BIDWADM_CO.OD_CO_PLAN_GDS_D"
+      ]
+    },
+    {
+      "job_name": "m_OD_CO_PLAN_INVN_D_a01",
+      "file_path": "Datastage export jobs\\exportall.dsx",
+      "erp_sources": [
+        "CO_PLAN_INVN_D",
+        "DBO.CO_PLAN_INVN_D"
+      ],
+      "od_targets": [
+        "BIDWADM_CO.OD_CO_PLAN_INVN_D"
+      ]
+    },
+    {
+      "job_name": "m_OD_CO_PLAN_M_a01",
+      "file_path": "Datastage export jobs\\exportall.dsx",
+      "erp_sources": [
+        "CO_PLAN_M",
+        "DBO.CO_PLAN_M"
+      ],
+      "od_targets": [
+        "BIDWADM_CO.OD_CO_PLAN_M"
+      ]
+    },
+    {
+      "job_name": "m_OD_CO_PLAN_SHOP_D_a01",
+      "file_path": "Datastage export jobs\\exportall.dsx",
+      "erp_sources": [
+        "CO_PLAN_SHOP_D",
+        "DBO.CO_PLAN_SHOP_D"
+      ],
+      "od_targets": [
+        "BIDWADM_CO.OD_CO_PLAN_SHOP_D"
+      ]
+    },
+    {
+      "job_name": "m_OD_CO_PNL_SHOP_S_a01",
+      "file_path": "Datastage export jobs\\exportall.dsx",
+      "erp_sources": [
+        "CO_PNL_SHOP_S"
+      ],
+      "od_targets": [
+        "BIDWADM_CO.OD_CO_PNL_SHOP_S"
+      ]
+    },
+    {
+      "job_name": "m_OD_CO_PNL_SL_S_a01",
+      "file_path": "Datastage export jobs\\exportall.dsx",
+      "erp_sources": [
+        "CO_PNL_SL_S",
+        "DBO.CO_PNL_SL_S"
+      ],
+      "od_targets": [
+        "BIDWADM_CO.OD_CO_PNL_SL_S"
+      ]
+    },
+    {
+      "job_name": "m_OD_DW_ZIPCD_M_a01",
+      "file_path": "Datastage export jobs\\exportall.dsx",
+      "erp_sources": [
+        "DBO.DW_ZIPCD_M",
+        "DW_ZIPCD_M"
+      ],
+      "od_targets": [
+        "BIDWADM_CO.OD_DW_ZIPCD_M"
+      ]
+    },
+    {
+      "job_name": "m_OD_EI_EXPO_BY_VRTL_IN_D_a01",
+      "file_path": "Datastage export jobs\\exportall.dsx",
+      "erp_sources": [
+        "EI_EXPO_BY_VRTL_IN_D"
+      ],
+      "od_targets": [
+        "BIDWADM_CO.OD_EI_EXPO_BY_VRTL_IN_D"
+      ]
+    },
+    {
+      "job_name": "m_OD_EI_EXPO_BY_VRTL_IN_M_a01",
+      "file_path": "Datastage export jobs\\exportall.dsx",
+      "erp_sources": [
+        "EI_EXPO_BY_VRTL_IN_M"
+      ],
+      "od_targets": [
+        "BIDWADM_CO.OD_EI_EXPO_BY_VRTL_IN_M"
+      ]
+    },
+    {
+      "job_name": "m_OD_EI_IMPO_IN_REQ_D_a01",
+      "file_path": "Datastage export jobs\\exportall.dsx",
+      "erp_sources": [
+        "EI_IMPO_IN_REQ_D"
+      ],
+      "od_targets": [
+        "BIDWADM_CO.OD_EI_IMPO_IN_REQ_D"
+      ]
+    },
+    {
+      "job_name": "m_OD_EI_IMPO_IN_REQ_M_a01",
+      "file_path": "Datastage export jobs\\exportall.dsx",
+      "erp_sources": [
+        "EI_IMPO_IN_REQ_M"
+      ],
+      "od_targets": [
+        "BIDWADM_CO.OD_EI_IMPO_IN_REQ_M"
+      ]
+    },
+    {
+      "job_name": "m_OD_EI_IMPO_PO_D_a01",
+      "file_path": "Datastage export jobs\\exportall.dsx",
+      "erp_sources": [
+        "EI_IMPO_PO_D"
+      ],
+      "od_targets": [
+        "BIDWADM_CO.OD_EI_IMPO_PO_D"
+      ]
+    },
+    {
+      "job_name": "m_OD_EI_IMPO_PO_M_a01",
+      "file_path": "Datastage export jobs\\exportall.dsx",
+      "erp_sources": [
+        "EI_IMPO_PO_M"
+      ],
+      "od_targets": [
+        "BIDWADM_CO.OD_EI_IMPO_PO_M"
+      ]
+    },
+    {
+      "job_name": "m_OD_EI_SRM_SHPP_BKNG_M_a01",
+      "file_path": "Datastage export jobs\\exportall.dsx",
+      "erp_sources": [
+        "EI_SRM_SHPP_BKNG_M"
+      ],
+      "od_targets": [
+        "BIDWADM_CO.OD_EI_SRM_SHPP_BKNG_M"
+      ]
+    },
+    {
+      "job_name": "m_OD_EM_EMP_APNT_D_a01",
+      "file_path": "Datastage export jobs\\exportall.dsx",
+      "erp_sources": [
+        "EM_EMP_APNT_D"
+      ],
+      "od_targets": [
+        "BIDWADM_CO.OD_EM_EMP_APNT_D"
+      ]
+    },
+    {
+      "job_name": "m_OD_EM_EMP_INFO_M_a01",
+      "file_path": "Datastage export jobs\\exportall.dsx",
+      "erp_sources": [
+        "EM_EMP_INFO_M"
+      ],
+      "od_targets": [
+        "BIDWADM_CO.OD_EM_EMP_INFO_M"
+      ]
+    },
+    {
+      "job_name": "m_OD_EM_EMP_PINFO_D_a01",
+      "file_path": "Datastage export jobs\\exportall.dsx",
+      "erp_sources": [
+        "EM_EMP_PINFO_D"
+      ],
+      "od_targets": [
+        "BIDWADM_CO.OD_EM_EMP_PINFO_D"
+      ]
+    },
+    {
+      "job_name": "m_OD_EM_JBGRD_MNG_M_a01",
+      "file_path": "Datastage export jobs\\exportall.dsx",
+      "erp_sources": [
+        "EM_JBGRD_MNG_M"
+      ],
+      "od_targets": [
+        "BIDWADM_CO.OD_EM_JBGRD_MNG_M"
+      ]
+    },
+    {
+      "job_name": "m_OD_FI_CUST_M_a01",
+      "file_path": "Datastage export jobs\\exportall.dsx",
+      "erp_sources": [
+        "FI_CUST_M"
+      ],
+      "od_targets": [
+        "BIDWADM_CO.OD_FI_CUST_M"
+      ]
+    },
+    {
+      "job_name": "m_OD_FI_EXRT_M_a01",
+      "file_path": "Datastage export jobs\\exportall.dsx",
+      "erp_sources": [
+        "FI_EXRT_M"
+      ],
+      "od_targets": [
+        "BIDWADM_CO.OD_FI_EXRT_M"
+      ]
+    },
+    {
+      "job_name": "m_OD_HR_BU_M_a01",
+      "file_path": "Datastage export jobs\\exportall.dsx",
+      "erp_sources": [
+        "HR_BU_M"
+      ],
+      "od_targets": [
+        "BIDWADM_CO.OD_HR_BU_M"
+      ]
+    },
+    {
+      "job_name": "m_OD_OZ_DEPT_M_a01",
+      "file_path": "Datastage export jobs\\exportall.dsx",
+      "erp_sources": [
+        "DBO.OZ_DEPT_M",
+        "OZ_DEPT_M"
+      ],
+      "od_targets": [
+        "BIDWADM_CO.OD_OZ_DEPT_M"
+      ]
+    },
+    {
+      "job_name": "m_OD_PN_BRND_D_a01",
+      "file_path": "Datastage export jobs\\exportall.dsx",
+      "erp_sources": [
+        "DBO.PN_BRND_D",
+        "PN_BRND_D"
+      ],
+      "od_targets": [
+        "BIDWADM_CO.OD_PN_BRND_D"
+      ]
+    },
+    {
+      "job_name": "m_OD_PN_BRND_M_a01",
+      "file_path": "Datastage export jobs\\exportall.dsx",
+      "erp_sources": [
+        "DBO.PN_BRND_M",
+        "PN_BRND_M"
+      ],
+      "od_targets": [
+        "BIDWADM_CO.OD_PN_BRND_M"
+      ]
+    },
+    {
+      "job_name": "m_OD_PN_BRND_STYL_CLR_M_a01",
+      "file_path": "Datastage export jobs\\exportall.dsx",
+      "erp_sources": [
+        "DBO.PN_BRND_STYL_CLR_M",
+        "PN_BRND_STYL_CLR_M"
+      ],
+      "od_targets": [
+        "BIDWADM_CO.OD_PN_BRND_STYL_CLR_M"
+      ]
+    },
+    {
+      "job_name": "m_OD_PN_BRND_STYL_SIZE_M_a01",
+      "file_path": "Datastage export jobs\\exportall.dsx",
+      "erp_sources": [
+        "DBO.PN_BRND_STYL_SIZE_M",
+        "PN_BRND_STYL_SIZE_M"
+      ],
+      "od_targets": [
+        "BIDWADM_CO.OD_PN_BRND_STYL_SIZE_M"
+      ]
+    },
+    {
+      "job_name": "m_OD_PN_MAIN_STYL_CLR_M_a01",
+      "file_path": "Datastage export jobs\\exportall.dsx",
+      "erp_sources": [
+        "DBO.PN_MAIN_STYL_CLR_M",
+        "PN_MAIN_STYL_CLR_M"
+      ],
+      "od_targets": [
+        "BIDWADM_CO.OD_PN_MAIN_STYL_CLR_M"
+      ]
+    },
+    {
+      "job_name": "m_OD_PN_MAIN_STYL_M_a01",
+      "file_path": "Datastage export jobs\\exportall.dsx",
+      "erp_sources": [
+        "PN_MAIN_STYL_M"
+      ],
+      "od_targets": [
+        "BIDWADM_CO.OD_PN_MAIN_STYL_M"
+      ]
+    },
+    {
+      "job_name": "m_OD_PN_MAIN_STYL_SIZE_M_a01",
+      "file_path": "Datastage export jobs\\exportall.dsx",
+      "erp_sources": [
+        "PN_MAIN_STYL_SIZE_M"
+      ],
+      "od_targets": [
+        "BIDWADM_CO.OD_PN_MAIN_STYL_SIZE_M"
+      ]
+    },
+    {
+      "job_name": "m_OD_PN_SIZE_ZONE_M_a01",
+      "file_path": "Datastage export jobs\\exportall.dsx",
+      "erp_sources": [
+        "DBO.PN_SIZE_ZONE_M",
+        "PN_SIZE_ZONE_M"
+      ],
+      "od_targets": [
+        "BIDWADM_CO.OD_PN_SIZE_ZONE_M"
+      ]
+    },
+    {
+      "job_name": "m_OD_PO_PRCH_BDGT_CHG_D_a01",
+      "file_path": "Datastage export jobs\\exportall.dsx",
+      "erp_sources": [
+        "DBO.PO_PRCH_BDGT_CHG_D",
+        "PO_PRCH_BDGT_CHG_D"
+      ],
+      "od_targets": [
+        "BIDWADM.OD_PO_PRCH_BDGT_CHG_D",
+        "BIDWADM_CO.OD_PO_PRCH_BDGT_CHG_D"
+      ]
+    },
+    {
+      "job_name": "m_OD_PO_PRCH_BDGT_CHG_M_a01",
+      "file_path": "Datastage export jobs\\exportall.dsx",
+      "erp_sources": [
+        "DBO.PO_PRCH_BDGT_CHG_M",
+        "PO_PRCH_BDGT_CHG_M"
+      ],
+      "od_targets": [
+        "BIDWADM.OD_PO_PRCH_BDGT_CHG_M",
+        "BIDWADM_CO.OD_PO_PRCH_BDGT_CHG_M"
+      ]
+    },
+    {
+      "job_name": "m_OD_PO_PRCH_BDGT_FRMN_M_a01",
+      "file_path": "Datastage export jobs\\exportall.dsx",
+      "erp_sources": [
+        "DBO.PO_PRCH_BDGT_FRMN_M",
+        "PO_PRCH_BDGT_FRMN_M"
+      ],
+      "od_targets": [
+        "BIDWADM.OD_PO_PRCH_BDGT_FRMN_M",
+        "BIDWADM_CO.OD_PO_PRCH_BDGT_FRMN_M"
+      ]
+    },
+    {
+      "job_name": "m_OD_PO_PRCH_BDGT_USE_M_a01",
+      "file_path": "Datastage export jobs\\exportall.dsx",
+      "erp_sources": [
+        "DBO.PO_PRCH_BDGT_USE_M",
+        "PO_PRCH_BDGT_USE_M"
+      ],
+      "od_targets": [
+        "BIDWADM.OD_PO_PRCH_BDGT_USE_M",
+        "BIDWADM_CO.OD_PO_PRCH_BDGT_USE_M"
+      ]
+    },
+    {
+      "job_name": "m_OD_PO_PRCH_ESTM_M_a01",
+      "file_path": "Datastage export jobs\\exportall.dsx",
+      "erp_sources": [
+        "PO_PRCH_ESTM_M"
+      ],
+      "od_targets": [
+        "BIDWADM_CO.OD_PO_PRCH_ESTM_M"
+      ]
+    },
+    {
+      "job_name": "m_OD_PO_STYL_PO_D_a01",
+      "file_path": "Datastage export jobs\\exportall.dsx",
+      "erp_sources": [
+        "PO_STYL_PO_D"
+      ],
+      "od_targets": [
+        "BIDWADM_CO.OD_PO_STYL_PO_D"
+      ]
+    },
+    {
+      "job_name": "m_OD_PP_CLM_M_a01",
+      "file_path": "Datastage export jobs\\exportall.dsx",
+      "erp_sources": [
+        "DBO.PP_CLM_M",
+        "PP_CLM_M"
+      ],
+      "od_targets": [
+        "BIDWADM_CO.OD_PP_CLM_M"
+      ]
+    },
+    {
+      "job_name": "m_OD_PP_DUDT_CLM_M_a01",
+      "file_path": "Datastage export jobs\\exportall.dsx",
+      "erp_sources": [
+        "DBO.PP_DUDT_CLM_M",
+        "PP_DUDT_CLM_M"
+      ],
+      "od_targets": [
+        "BIDWADM_CO.OD_PP_DUDT_CLM_M"
+      ]
+    },
+    {
+      "job_name": "m_OD_PP_STYL_IN_SCH_D_a01",
+      "file_path": "Datastage export jobs\\exportall.dsx",
+      "erp_sources": [
+        "PP_STYL_IN_SCH_D"
+      ],
+      "od_targets": [
+        "BIDWADM_CO.OD_PP_STYL_IN_SCH_D"
+      ]
+    },
+    {
+      "job_name": "m_OD_PP_STYL_IN_SCH_M_a01",
+      "file_path": "Datastage export jobs\\exportall.dsx",
+      "erp_sources": [
+        "DBO.PP_STYL_IN_SCH_M",
+        "PP_STYL_IN_SCH_M"
+      ],
+      "od_targets": [
+        "BIDWADM_CO.OD_PP_STYL_IN_SCH_M"
+      ]
+    },
+    {
+      "job_name": "m_OD_PP_STYL_PRCOST_D_a01",
+      "file_path": "Datastage export jobs\\exportall.dsx",
+      "erp_sources": [
+        "DBO.PP_STYL_PRCOST_D",
+        "PP_STYL_PRCOST_D"
+      ],
+      "od_targets": [
+        "BIDWADM_CO.OD_PP_STYL_PRCOST_D"
+      ]
+    },
+    {
+      "job_name": "m_OD_PP_STYL_PRCOST_M_a01",
+      "file_path": "Datastage export jobs\\exportall.dsx",
+      "erp_sources": [
+        "PP_STYL_PRCOST_M"
+      ],
+      "od_targets": [
+        "BIDWADM_CO.OD_PP_STYL_PRCOST_M"
+      ]
+    },
+    {
+      "job_name": "m_OD_PP_STYL_PTCOST_D_a01",
+      "file_path": "Datastage export jobs\\exportall.dsx",
+      "erp_sources": [
+        "DBO.PP_STYL_PTCOST_D",
+        "PP_STYL_PTCOST_D"
+      ],
+      "od_targets": [
+        "BIDWADM_CO.OD_PP_STYL_PTCOST_D"
+      ]
+    },
+    {
+      "job_name": "m_OD_PP_STYL_PTCOST_M_a01",
+      "file_path": "Datastage export jobs\\exportall.dsx",
+      "erp_sources": [
+        "DBO.PP_STYL_PTCOST_M",
+        "PP_STYL_PTCOST_M"
+      ],
+      "od_targets": [
+        "BIDWADM_CO.OD_PP_STYL_PTCOST_M"
+      ]
+    },
+    {
+      "job_name": "m_OD_SA_BRND_TRSF_M_a01",
+      "file_path": "Datastage export jobs\\exportall.dsx",
+      "erp_sources": [
+        "DBO.SA_BRND_TRSF_M",
+        "SA_BRND_TRSF_M"
+      ],
+      "od_targets": [
+        "BIDWADM_CO.OD_SA_BRND_TRSF_M"
+      ]
+    },
+    {
+      "job_name": "m_OD_SA_BRND_TRSF_STYL_D_a01",
+      "file_path": "Datastage export jobs\\exportall.dsx",
+      "erp_sources": [
+        "DBO.SA_BRND_TRSF_STYL_D",
+        "SA_BRND_TRSF_STYL_D"
+      ],
+      "od_targets": [
+        "BIDWADM_CO.OD_SA_BRND_TRSF_STYL_D"
+      ]
+    },
+    {
+      "job_name": "m_OD_SA_CLPY_AVG_CPRC_M_a01",
+      "file_path": "Datastage export jobs\\exportall.dsx",
+      "erp_sources": [
+        "DBO.SA_CLPY_AVG_CPRC_M",
+        "SA_CLPY_AVG_CPRC_M"
+      ],
+      "od_targets": [
+        "BIDWADM_CO.OD_SA_CLPY_AVG_CPRC_M"
+      ]
+    },
+    {
+      "job_name": "m_OD_SA_DC_EVNT_M_a01",
+      "file_path": "Datastage export jobs\\exportall.dsx",
+      "erp_sources": [
+        "DBO.SA_DC_EVNT_M",
+        "SA_DC_EVNT_M"
+      ],
+      "od_targets": [
+        "BIDWADM_CO.OD_SA_DC_EVNT_M"
+      ]
+    },
+    {
+      "job_name": "m_OD_SA_DLY_SLS_GOAL_M_a01",
+      "file_path": "Datastage export jobs\\exportall.dsx",
+      "erp_sources": [
+        "SA_DLY_SLS_GOAL_M"
+      ],
+      "od_targets": [
+        "BIDWADM_CO.OD_SA_DLY_SLS_GOAL_M"
+      ]
+    },
+    {
+      "job_name": "m_OD_SA_MLY_EXPT_GOAL_M_a01",
+      "file_path": "Datastage export jobs\\exportall.dsx",
+      "erp_sources": [
+        "DBO.SA_MLY_EXPT_GOAL_M",
+        "SA_MLY_EXPT_GOAL_M"
+      ],
+      "od_targets": [
+        "BIDWADM_CO.OD_SA_MLY_EXPT_GOAL_M"
+      ]
+    },
+    {
+      "job_name": "m_OD_SA_MLY_GOAL_TCNT_M_a01",
+      "file_path": "Datastage export jobs\\exportall.dsx",
+      "erp_sources": [
+        "DBO.SA_MLY_GOAL_TCNT_M",
+        "SA_MLY_GOAL_TCNT_M"
+      ],
+      "od_targets": [
+        "BIDWADM_CO.OD_SA_MLY_GOAL_TCNT_M"
+      ]
+    },
+    {
+      "job_name": "m_OD_SA_SA_PIC_M_a01",
+      "file_path": "Datastage export jobs\\exportall.dsx",
+      "erp_sources": [
+        "DBO.SA_SA_PIC_M",
+        "SA_SA_PIC_M"
+      ],
+      "od_targets": [
+        "BIDWADM_CO.OD_SA_SA_PIC_M"
+      ]
+    },
+    {
+      "job_name": "m_OD_SA_SHOP_INFO_M_a01",
+      "file_path": "Datastage export jobs\\exportall.dsx",
+      "erp_sources": [
+        "SA_SHOP_INFO_M"
+      ],
+      "od_targets": [
+        "BIDWADM_CO.OD_SA_SHOP_INFO_M"
+      ]
+    },
+    {
+      "job_name": "m_OD_SA_SHOP_MLY_CLPY_M_a01",
+      "file_path": "Datastage export jobs\\exportall.dsx",
+      "erp_sources": [
+        "SA_SHOP_MLY_CLPY_M"
+      ],
+      "od_targets": [
+        "BIDWADM_CO.OD_SA_SHOP_MLY_CLPY_M"
+      ]
+    },
+    {
+      "job_name": "m_OD_SA_SHOP_MLY_GDS_AGG_S_a01",
+      "file_path": "Datastage export jobs\\exportall.dsx",
+      "erp_sources": [
+        "DBO.SA_SHOP_MLY_GDS_AGG_S",
+        "SA_SHOP_MLY_GDS_AGG_S"
+      ],
+      "od_targets": [
+        "BIDWADM_CO.OD_SA_SHOP_MLY_GDS_AGG_S"
+      ]
+    },
+    {
+      "job_name": "m_OD_SA_SHOP_MLY_GDS_AGG_S_i01",
+      "file_path": "Datastage export jobs\\exportall.dsx",
+      "erp_sources": [
+        "DBO.SA_SHOP_MLY_GDS_AGG_S",
+        "SA_SHOP_MLY_GDS_AGG_S"
+      ],
+      "od_targets": [
+        "BIDWADM_CO.OD_SA_SHOP_MLY_GDS_AGG_S"
+      ]
+    },
+    {
+      "job_name": "m_OD_SA_SHOP_MLY_INVN_AGG_S_a01",
+      "file_path": "Datastage export jobs\\exportall.dsx",
+      "erp_sources": [
+        "DBO.SA_SHOP_MLY_INVN_AGG_S",
+        "SA_SHOP_MLY_INVN_AGG_S"
+      ],
+      "od_targets": [
+        "BIDWADM.OD_SA_SHOP_MLY_INVN_AGG_S",
+        "BIDWADM_CO.OD_SA_SHOP_MLY_INVN_AGG_S"
+      ]
+    },
+    {
+      "job_name": "m_OD_SA_SHOP_OPER_PLAN_M_a01",
+      "file_path": "Datastage export jobs\\exportall.dsx",
+      "erp_sources": [
+        "DBO.SA_SHOP_OPER_PLAN_M",
+        "SA_SHOP_OPER_PLAN_M"
+      ],
+      "od_targets": [
+        "BIDWADM_CO.OD_SA_SHOP_OPER_PLAN_M"
+      ]
+    },
+    {
+      "job_name": "m_OD_SA_SHOP_SL_BRND_M_a01",
+      "file_path": "Datastage export jobs\\exportall.dsx",
+      "erp_sources": [
+        "DBO.SA_SHOP_SL_BRND_M",
+        "SA_SHOP_SL_BRND_M"
+      ],
+      "od_targets": [
+        "BIDWADM_CO.OD_SA_SHOP_SL_BRND_M"
+      ]
+    },
+    {
+      "job_name": "m_OD_SA_SHOP_SL_BRND_PIC_M_a01",
+      "file_path": "Datastage export jobs\\exportall.dsx",
+      "erp_sources": [
+        "DBO.SA_SHOP_SL_BRND_PIC_M",
+        "SA_SHOP_SL_BRND_PIC_M"
+      ],
+      "od_targets": [
+        "BIDWADM_CO.OD_SA_SHOP_SL_BRND_PIC_M"
+      ]
+    },
+    {
+      "job_name": "m_OD_SA_STYL_GRP_CMPS_D_a01",
+      "file_path": "Datastage export jobs\\exportall.dsx",
+      "erp_sources": [
+        "DBO.SA_STYL_GRP_CMPS_D",
+        "SA_STYL_GRP_CMPS_D"
+      ],
+      "od_targets": [
+        "BIDWADM_CO.OD_SA_STYL_GRP_CMPS_D"
+      ]
+    },
+    {
+      "job_name": "m_OD_SA_STYL_GRP_M_a01",
+      "file_path": "Datastage export jobs\\exportall.dsx",
+      "erp_sources": [
+        "DBO.SA_STYL_GRP_M",
+        "SA_STYL_GRP_M"
+      ],
+      "od_targets": [
+        "BIDWADM_CO.OD_SA_STYL_GRP_M"
+      ]
+    },
+    {
+      "job_name": "m_OD_SA_WHLS_DLY_SL_S_a01",
+      "file_path": "Datastage export jobs\\exportall.dsx",
+      "erp_sources": [
+        "DBO.SA_WHLS_DLY_SL_S",
+        "SA_WHLS_DLY_SL_S"
+      ],
+      "od_targets": [
+        "BIDWADM_CO.OD_SA_WHLS_DLY_SL_S"
+      ]
+    },
+    {
+      "job_name": "m_OD_SA_WHLS_ORD_D_a01",
+      "file_path": "Datastage export jobs\\exportall.dsx",
+      "erp_sources": [
+        "SA_WHLS_ORD_D"
+      ],
+      "od_targets": [
+        "BIDWADM_CO.OD_SA_WHLS_ORD_D"
+      ]
+    },
+    {
+      "job_name": "m_OD_SA_WHLS_ORD_M_a01",
+      "file_path": "Datastage export jobs\\exportall.dsx",
+      "erp_sources": [
+        "SA_WHLS_ORD_M"
+      ],
+      "od_targets": [
+        "BIDWADM_CO.OD_SA_WHLS_ORD_M"
+      ]
+    },
+    {
+      "job_name": "m_OD_SA_WHLS_ORD_MOVE_D_a01",
+      "file_path": "Datastage export jobs\\exportall.dsx",
+      "erp_sources": [
+        "DBO.SA_WHLS_ORD_MOVE_D",
+        "SA_WHLS_ORD_MOVE_D"
+      ],
+      "od_targets": [
+        "BIDWADM_CO.OD_SA_WHLS_ORD_MOVE_D"
+      ]
+    },
+    {
+      "job_name": "m_OD_SA_WHLS_ORD_MOVE_M_a01",
+      "file_path": "Datastage export jobs\\exportall.dsx",
+      "erp_sources": [
+        "DBO.SA_WHLS_ORD_MOVE_M",
+        "SA_WHLS_ORD_MOVE_M"
+      ],
+      "od_targets": [
+        "BIDWADM_CO.OD_SA_WHLS_ORD_MOVE_M"
+      ]
+    },
+    {
+      "job_name": "m_OD_SA_WHLS_ORD_OUT_D_a01",
+      "file_path": "Datastage export jobs\\exportall.dsx",
+      "erp_sources": [
+        "DBO.SA_WHLS_ORD_OUT_D",
+        "SA_WHLS_ORD_OUT_D"
+      ],
+      "od_targets": [
+        "BIDWADM_CO.OD_SA_WHLS_ORD_OUT_D"
+      ]
+    },
+    {
+      "job_name": "m_OD_SA_WHLS_ORD_OUT_M_a01",
+      "file_path": "Datastage export jobs\\exportall.dsx",
+      "erp_sources": [
+        "DBO.SA_WHLS_ORD_OUT_M",
+        "SA_WHLS_ORD_OUT_M"
+      ],
+      "od_targets": [
+        "BIDWADM_CO.OD_SA_WHLS_ORD_OUT_M"
+      ]
+    },
+    {
+      "job_name": "m_OD_SA_WHLS_RTNG_D_a01",
+      "file_path": "Datastage export jobs\\exportall.dsx",
+      "erp_sources": [
+        "DBO.SA_WHLS_RTNG_D",
+        "SA_WHLS_RTNG_D"
+      ],
+      "od_targets": [
+        "BIDWADM_CO.OD_SA_WHLS_RTNG_D"
+      ]
+    },
+    {
+      "job_name": "m_OD_SA_WHLS_RTNG_M_a01",
+      "file_path": "Datastage export jobs\\exportall.dsx",
+      "erp_sources": [
+        "DBO.SA_WHLS_RTNG_M",
+        "SA_WHLS_RTNG_M"
+      ],
+      "od_targets": [
+        "BIDWADM_CO.OD_SA_WHLS_RTNG_M"
+      ]
+    },
+    {
+      "job_name": "m_OD_SA_WRHS_MLY_CLPY_S_a01",
+      "file_path": "Datastage export jobs\\exportall.dsx",
+      "erp_sources": [
+        "SA_WRHS_MLY_CLPY_S"
+      ],
+      "od_targets": [
+        "BIDWADM_CO.OD_SA_WRHS_MLY_CLPY_S"
+      ]
+    },
+    {
+      "job_name": "m_OD_SP_SL_CMPG_BNFT_D_a01",
+      "file_path": "Datastage export jobs\\exportall.dsx",
+      "erp_sources": [
+        "DBO.SP_SL_CMPG_BNFT_D",
+        "SP_SL_CMPG_BNFT_D"
+      ],
+      "od_targets": [
+        "BIDWADM_CO.OD_SP_SL_CMPG_BNFT_D"
+      ]
+    },
+    {
+      "job_name": "m_OD_SP_SL_M_a01",
+      "file_path": "Datastage export jobs\\exportall.dsx",
+      "erp_sources": [
+        "SP_SL_M"
+      ],
+      "od_targets": [
+        "BIDWADM_CO.OD_SP_SL_M"
+      ]
+    },
+    {
+      "job_name": "m_OD_SP_SL_PAY_D_a01",
+      "file_path": "Datastage export jobs\\exportall.dsx",
+      "erp_sources": [
+        "SP_SL_PAY_D"
+      ],
+      "od_targets": [
+        "BIDWADM_CO.OD_SP_SL_PAY_D"
+      ]
+    },
+    {
+      "job_name": "m_OD_SP_SL_PDITEM_D_a01",
+      "file_path": "Datastage export jobs\\exportall.dsx",
+      "erp_sources": [
+        "SP_SL_PDITEM_D"
+      ],
+      "od_targets": [
+        "BIDWADM_CO.OD_SP_SL_PDITEM_D"
+      ]
+    },
+    {
+      "job_name": "m_OD_WM_IN_D_a01",
+      "file_path": "Datastage export jobs\\exportall.dsx",
+      "erp_sources": [
+        "WM_IN_D"
+      ],
+      "od_targets": [
+        "BIDWADM_CO.OD_WM_IN_D"
+      ]
+    },
+    {
+      "job_name": "m_OD_WM_INVN_MNTH_M_a01",
+      "file_path": "Datastage export jobs\\exportall.dsx",
+      "erp_sources": [
+        "DBO.WM_INVN_MNTH_M",
+        "WM_INVN_MNTH_M"
+      ],
+      "od_targets": [
+        "BIDWADM_CO.OD_WM_INVN_MNTH_M"
+      ]
+    },
+    {
+      "job_name": "m_OD_WM_MOVE_REQ_D_a01",
+      "file_path": "Datastage export jobs\\exportall.dsx",
+      "erp_sources": [
+        "DBO.WM_MOVE_REQ_D",
+        "WM_MOVE_REQ_D"
+      ],
+      "od_targets": [
+        "BIDWADM_CO.OD_WM_MOVE_REQ_D"
+      ]
+    },
+    {
+      "job_name": "m_OD_WM_MOVE_REQ_M_a01",
+      "file_path": "Datastage export jobs\\exportall.dsx",
+      "erp_sources": [
+        "DBO.WM_MOVE_REQ_M",
+        "WM_MOVE_REQ_M"
+      ],
+      "od_targets": [
+        "BIDWADM_CO.OD_WM_MOVE_REQ_M"
+      ]
+    },
+    {
+      "job_name": "m_OD_WM_OUT_D_a01",
+      "file_path": "Datastage export jobs\\exportall.dsx",
+      "erp_sources": [
+        "WM_OUT_D"
+      ],
+      "od_targets": [
+        "BIDWADM_CO.OD_WM_OUT_D"
+      ]
+    },
+    {
+      "job_name": "m_OD_WM_OUT_D_i01",
+      "file_path": "Datastage export jobs\\exportall.dsx",
+      "erp_sources": [
+        "DBO.WM_OUT_D",
+        "WM_OUT_D"
+      ],
+      "od_targets": [
+        "BIDWADM_CO.OD_WM_OUT_D"
+      ]
+    },
+    {
+      "job_name": "m_OD_WM_WRHS_M_a01",
+      "file_path": "Datastage export jobs\\exportall.dsx",
+      "erp_sources": [
+        "DBO.WM_WRHS_M",
+        "WM_WRHS_M"
+      ],
+      "od_targets": [
+        "BIDWADM_CO.OD_WM_WRHS_M"
+      ]
+    },
+    {
+      "job_name": "Template_ods_ERP_to_DW_DI",
+      "file_path": "Datastage export jobs\\exportall.dsx",
+      "erp_sources": [
+        "DBO.WM_MOVE_REQ_M",
+        "WM_MOVE_REQ_M"
+      ],
+      "od_targets": [
+        "BIDWADM_CO.OD_WM_MOVE_REQ_M",
+        "BIDWADM_CO.ZZ_OD_WM_MOVE_REQ_M"
+      ]
+    },
+    {
+      "job_name": "Template_ods_ERP_to_DW_TI",
+      "file_path": "Datastage export jobs\\exportall.dsx",
+      "erp_sources": [
+        "DBO.WM_WRHS_M",
+        "WM_WRHS_M"
+      ],
+      "od_targets": [
+        "BIDWADM_CO.OD_WM_WRHS_M",
+        "BIDWADM_CO.ZZ_OD_WM_WRHS_M"
+      ]
+    }
+  ],
+  "tier2_jobs": [],
+  "summary": {
+    "jobs_with_column": 360,
+    "tier1_jobs": 102,
+    "tier2_jobs": 0,
+    "impacted_erp_tables": 157,
+    "candidate_erp_tables": 1242
+  }
+}

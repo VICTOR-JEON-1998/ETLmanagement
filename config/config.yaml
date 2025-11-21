@@ -50,12 +50,24 @@ databases:
   vertica:
     host: "10.100.20.81"
     port: 5433
-    database: "BIDW"  # 이미지에서 확인된 데이터베이스 이름
-    username: "vertica"  # 이미지에서 확인된 사용자명
+    database: "BIDW"
+    username: "vertica"
     password: "${VERTICA_PASSWORD}"  # .env에서 관리
 
 logging:
   level: "INFO"
   format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
   file: "logs/etlmanagement.log"
+
+erp_impact:
+  od_schemas:
+    - "BIDWADM_CO"
+  od_prefixes:
+    - "OD_"
+  ft_schemas:
+    - "BIDWADM"
+    - "BIDWREP"
+  ft_prefixes:
+    - "FT_"
+  default_erp_table_file: null
 

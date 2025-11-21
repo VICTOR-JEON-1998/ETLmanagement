@@ -38,19 +38,61 @@ class ParameterMapper:
         
         original = param_table_name
         
-        # 마지막 점(.) 이후가 테이블명
-        parts = param_table_name.rsplit(".", 1)
-        if len(parts) == 2:
-            param_part = parts[0]  # #P_DW_VER.$P_DW_VER_OWN_BIDWADM#
-            table_name = parts[1]  # FT_AS_ACCP_RSLT
+        # ERP 테이블의 경우: #P_ERP_MS.$P_ERP_MS_OWN_FILA_ERP#.dbo.IF_DW_CART_M
+        # 형식에서 마지막 두 점 사이가 스키마(dbo), 마지막 점 이후가 테이블명
+        # Vertica 테이블의 경우: #P_DW_VER.$P_DW_VER_OWN_BIDWADM#.FT_AS_ACCP_RSLT
+        # 형식에서 마지막 점 이후가 테이블명
+        
+        # ERP인지 먼저 확인
+        is_erp = "ERP" in param_table_name.upper()
+        
+        if is_erp:
+            # ERP 테이블: 파라미터 부분이 #로 끝나고, 그 이후에 스키마.테이블명이 올 수 있음
+            # 형식: #P_ERP_MS.$P_ERP_MS_OWN_FILA_ERP#.dbo.IF_DW_CART_M 또는
+            #       #P_ERP_MS.$P_ERP_MS_OWN_FILA_ERP#.DW_ETL_L
+            # 파라미터 부분이 끝나는 지점 (#) 찾기
+            param_end_idx = param_table_name.rfind("#")
+            if param_end_idx >= 0 and param_end_idx < len(param_table_name) - 1:
+                # 파라미터 부분 이후의 문자열
+                after_param = param_table_name[param_end_idx + 1:]
+                param_part = param_table_name[:param_end_idx + 1]  # #P_ERP_MS.$P_ERP_MS_OWN_FILA_ERP#
+                
+                # 파라미터 이후 부분에서 점으로 분리
+                if after_param.startswith("."):
+                    after_param = after_param[1:]  # 앞의 점 제거
+                
+                if after_param:
+                    # 점이 있으면 스키마.테이블명, 없으면 테이블명만
+                    after_parts = after_param.split(".", 1)
+                    if len(after_parts) == 2:
+                        # 스키마.테이블명 형식
+                        schema = after_parts[0]  # dbo
+                        table_name = after_parts[1]  # IF_DW_CART_M
+                    else:
+                        # 테이블명만 있는 경우, 기본 스키마 dbo 사용
+                        schema = "dbo"
+                        table_name = after_parts[0]  # DW_ETL_L
+                else:
+                    table_name = ""
+                    schema = ""
+            else:
+                # #가 없는 경우 (이상한 형식)
+                param_part = param_table_name
+                table_name = ""
+                schema = ""
         else:
-            # 점이 없는 경우 (파라미터만)
-            param_part = param_table_name
-            table_name = ""
+            # Vertica 테이블: 마지막 점 이후가 테이블명
+            parts = param_table_name.rsplit(".", 1)
+            if len(parts) == 2:
+                param_part = parts[0]  # #P_DW_VER.$P_DW_VER_OWN_BIDWADM#
+                table_name = parts[1]  # FT_AS_ACCP_RSLT
+            else:
+                param_part = param_table_name
+                table_name = ""
+            schema = ""
         
         # 파라미터에서 DB 타입 판단
         db_type = None
-        schema = ""
         
         # BIDW가 포함되어 있으면 Vertica
         if "BIDW" in param_part.upper():
@@ -62,8 +104,10 @@ class ParameterMapper:
         # ERP가 포함되어 있으면 MSSQL
         elif "ERP" in param_part.upper():
             db_type = "mssql"
-            # MSSQL은 보통 스키마가 없거나 dbo
-            schema = "dbo"
+            # ERP의 경우 위에서 이미 스키마를 추출했거나, 기본값 dbo 사용
+            # 스키마가 아직 설정되지 않았으면 기본값 dbo 사용
+            if not schema:
+                schema = "dbo"
         
         return {
             "db_type": db_type,
